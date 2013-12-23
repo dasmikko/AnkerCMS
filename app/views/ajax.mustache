@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>{{page_title}}</title>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+	$(function(){
+		
+		$('#button').click(function(){
+
+			var id = $('#id').val();
+			console.log("URL id: "+id);
+			$.ajax({
+			  dataType: "json",
+			  beforeSend: function (request)
+	          {
+	          	request.setRequestHeader("APIKEY", "Gp23FUP6b4CB5ISW7U3lMcbEnNXIBX17fail");
+	          },
+			  url: "/api/v1/url/"+id,
+			  data: "",
+			  success: function(data) {
+			  	console.log(data['urls'][0]['url'])
+			  	$('#url').text(data['urls'][0]['url']);
+			  	$('#desc').text(data['urls'][0]['description']);
+			  }
+			});
+		});
+
+
+
+	});
+	
+	</script>
+    Url: <strong><span id="url"></span></strong><br>
+    description:  <strong><span id="desc"></span></strong>
+    <br>
+    <input id="id" type="number" value="0"/><button id="button">Get URL</button>
+</body>
+</html>
