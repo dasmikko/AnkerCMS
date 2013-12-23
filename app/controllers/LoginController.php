@@ -6,6 +6,7 @@ public function showLogin()
     {
         // show the form
         $view = View::make('login');
+
         if (!Auth::check())
         {    
             $view->status = "not logged in";
@@ -14,6 +15,10 @@ public function showLogin()
         {
             $view->status = "logged in";
         }
+
+        $view->page_title = "Login";
+        $view->menu = Page::getPagesMenu();
+
         return $view;
     }
 

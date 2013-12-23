@@ -99,73 +99,49 @@ class ForumController extends BaseController {
      */
     public function AddPost($thread_id)
     {
-        if( !Auth::guest() )
-        {
-            // Get page
-            $post = new Posts;
-
-            // Setup view variables for the view
-            $post->thread_id = $thread_id;
-            $post->content = Input::get('post_content');
-            $post->status = 'active';
-            $post->user_id = Auth::user()->id;
-
-            // Show Page list 
-            $post->save();
-
-            return Redirect::to('/forum/thread/'.$thread_id.'#'.$post->id);
-        }
-        else
-        {
-            Redirect::guest('/login');
-        }
         
+        // Get page
+        $post = new Posts;
+
+        // Setup view variables for the view
+        $post->thread_id = $thread_id;
+        $post->content = Input::get('post_content');
+        $post->status = 'active';
+        $post->user_id = Auth::user()->id;
+
+        // Show Page list 
+        $post->save();
+
+        return Redirect::to('/forum/thread/'.$thread_id.'#'.$post->id);
     }
 
     public function AddThread() 
     {
-        if( !Auth::guest() )
-        {
-            //show all pages
-            $view = View::make('forum.addthread');
+        //show all pages
+        $view = View::make('forum.addthread');
 
-            // Setup view variables
-            $view->page_title = "Create Thread";
-            $view->menu = Page::getPagesMenu();
+        // Setup view variables
+        $view->page_title = "Create Thread";
+        $view->menu = Page::getPagesMenu();
 
-            return $view;
-        }
-        else
-        {
-            Redirect::guest('/login');
-        }
+        return $view;
     }
 
     public function SaveThread()
     {
-        if( !Auth::guest() )
-        {
-            // Get page
-            $thread = new Thread;
+        // Get page
+        $thread = new Thread;
 
-            // Setup view variables for the view
-            $thread->title = Input::get('title');;
-            $thread->content = Input::get('post_content');
-            $thread->status = 'active';
-            $thread->user_id = Auth::user()->id;
+        // Setup view variables for the view
+        $thread->title = Input::get('title');;
+        $thread->content = Input::get('post_content');
+        $thread->status = 'active';
+        $thread->user_id = Auth::user()->id;
 
-            // Show Page list 
-            $thread->save();
+        // Show Page list 
+        $thread->save();
 
-            return Redirect::to('/forum/thread/'.$thread->id);
-        }
-        else
-        {
-            Redirect::guest('/login');
-        }
-        
+        return Redirect::to('/forum/thread/'.$thread->id);
     }
-
-
 
 }

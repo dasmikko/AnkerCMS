@@ -22,7 +22,7 @@
               <p>{{ $thread['user']['username'] }}</p>
               <img src="{{ Gravatar::get_gravatar($thread['user']['email'], 50) }}">
             </td>
-            <td>{{ $thread['title'] }}</td>
+            <td>{{{ $thread['title'] }}}</td>
             <td>{{ $thread['postsAmount'] }}</td>
             <td><a href="/forum/thread/{{ $thread['id'] }}">View Thread</a></td>
           </tr>

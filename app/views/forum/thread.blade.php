@@ -18,7 +18,7 @@
           @foreach ($posts as $post)
             <tr id="{{ $post->id }}" class="post">
               <td style="text-align: center;">
-                <p>{{ $post->user->username }}</p>
+                <p>{{{ $post->user->username }}}</p>
                 <img src="{{ Gravatar::get_gravatar($post->user->email, 60) }}">
               </td>
               <td>
@@ -28,6 +28,8 @@
             </tr>
           @endforeach
           @endif
+
+          @if ( Auth::check() )
           <tr>
             <td colspan=2 width=20 id="addpost">
               
@@ -40,9 +42,16 @@
                   {{ Form::submit( 'Quick reply', array('class' => 'btn btn-default') ) }}
                            
               {{ Form::close() }}
-            
             </td>
           </tr>
+          @else
+          <tr>
+            <td colspan=2 width=20 id="addpost" style="text-align: center;">
+              <p>You need to be logged in to post a reply!</p>
+              <a href="/login" class="btn btn-primary">Login</a>
+            </td>
+          </tr>
+          @endif
       </table>
     </div>
 

@@ -25,7 +25,7 @@
               
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-          {{ Form::submit( 'Create Thread', array('class' => 'btn btn-default') ) }}
+          {{ Form::submit( 'Create Thread', array('class' => 'btn btn-primary') ) }}
         </div>
       </div>             
                            

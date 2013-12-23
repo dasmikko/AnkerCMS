@@ -46,13 +46,24 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.role'), function()
 
 Route::group(array('prefix' => 'forum', 'before' => ''), function()
 {
-    // Dashboard
+    // home
     Route::get('/', 'ForumController@index');
 
     //  Threads
+    Route::get('/thread/addthread', 'ForumController@AddThread');    
+    Route::get('/thread/{id}', 'ForumController@ViewThread');
+
+
+});
+
+// Forum for when being user is needed
+Route::group(array('prefix' => 'forum', 'before' => 'auth'), function()
+{
+    // Adding posts or threads
+    
     Route::get('/thread/addthread', 'ForumController@AddThread');
     Route::post('/thread/addthread', 'ForumController@SaveThread');
-    Route::get('/thread/{id}', 'ForumController@ViewThread');
+
     Route::post('/thread/{thread_id}/addpost', 'ForumController@AddPost');
 
 });
