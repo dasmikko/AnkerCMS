@@ -8,6 +8,7 @@ Feel free to contribute or use this!
 ## What can you do with this CMS?
 - Full Blog System
 - Forum
+- Gravatar support
 - More to come!
 
 
