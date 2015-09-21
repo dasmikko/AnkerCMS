@@ -24,7 +24,7 @@ class ForumController extends BaseController {
     public function index()
     {
         // Get all threads with relations
-        $threads = Thread::all();
+        $threads = Thread::get_threads();
         
         // Setup a empty array for out threads
         $threadsContainer = array();
@@ -33,15 +33,15 @@ class ForumController extends BaseController {
         foreach ($threads as $thread) 
         {
             // Count all the posts
-            $postsAmount = Posts::where('thread_id', '=', $thread->id)->count();
+            $postsAmount = Posts::get_thread_posts_count($thread->id);
 
             // Setup array for a single thread
             $SingleThread = array(
                 'id' => $thread->id,
                 'title' => $thread->title,
                 'user' => array(
-                        'username' => $thread->user->username,
-                        'email' => $thread->user->email,
+                        'username' => $thread->username,
+                        'avatar' => $thread->avatar,
                     ),
                 'postsAmount' => $postsAmount,
             );
@@ -51,6 +51,9 @@ class ForumController extends BaseController {
 
         }
 
+        // Load helpers
+        $helpers = new Helpers;
+
         //show all pages
         $view = View::make('forum.default');
 
@@ -58,8 +61,8 @@ class ForumController extends BaseController {
         // Setup view variables
         $view->page_title = "Threads!";
         $view->threads = $threadsContainer;
-        $view->menu = Page::getPagesMenu();
-
+        $view->menu = $this->menu;
+    
         return $view;
 
     }
@@ -71,20 +74,21 @@ class ForumController extends BaseController {
     public function ViewThread($id)
     {
         // Get all threads with relations
-        $thread = Thread::where('id', '=', $id)->first();
+        //$thread = Thread::where('id', '=', $id)->first();
+        $thread = Thread::get_thread_by_id($id);
+
 
         // Get all posts for the thread with relations
-        $posts = Posts::where('thread_id', '=', $id)->get();
+        $posts = Posts::get_posts_by_thread_id($id);
 
         //show all pages
         $view = View::make('forum.thread');
 
-        
         // Setup view variables
         $view->page_title = $thread->title;
         $view->thread = $thread;
         $view->posts = $posts;
-        $view->menu = Page::getPagesMenu();
+        $view->menu = $this->menu;
         $view->id = $thread->id;
 
         return $view;
@@ -99,20 +103,25 @@ class ForumController extends BaseController {
      */
     public function AddPost($thread_id)
     {
-        
-        // Get page
+        // Init new Posts
         $post = new Posts;
 
-        // Setup view variables for the view
+        // Setup new post
         $post->thread_id = $thread_id;
         $post->content = Input::get('post_content');
         $post->status = 'active';
         $post->user_id = Auth::user()->id;
 
-        // Show Page list 
-        $post->save();
+        $status = Posts::add_post($post);
 
-        return Redirect::to('/forum/thread/'.$thread_id.'#'.$post->id);
+        if($status > 0)
+        {
+            return Redirect::to('/forum/thread/'.$thread_id.'#'.$post->id);
+        }
+        else 
+        {
+            return Redirect::to('/forum');   
+        }        
     }
 
     public function AddThread() 
@@ -122,7 +131,7 @@ class ForumController extends BaseController {
 
         // Setup view variables
         $view->page_title = "Create Thread";
-        $view->menu = Page::getPagesMenu();
+        $view->menu = $this->menu;
 
         return $view;
     }

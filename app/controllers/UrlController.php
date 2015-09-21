@@ -9,7 +9,8 @@ class UrlController extends BaseController {
 	 */
 	public function index()
 	{
-		$urls = Url::where('user_id', Auth::user()->id)->get();
+		$urls = Url::get_user_urls(Auth::user()->id);
+		
  		if (!$urls)
  		{
  			$error = "Found 0 URLS!";

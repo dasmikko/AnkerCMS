@@ -18,7 +18,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.role'), function()
     Route::get('/', 'AdminController@index');
 
     // Manage blogs
-    Route::get('/blogs', array('as' => 'AdminShowBlog', 'uses' => 'AdminBlogController@showBlogs'));
+    Route::get('/blogs', array('as' => 'AdminShowBlogs', 'uses' => 'AdminBlogController@showBlogs'));
     Route::get('/blogs/edit', 'AdminBlogController@editBlog'); // Show Blog page
     Route::post('/blogs/edit', 'AdminBlogController@addBlog'); // Add the Blog
     Route::get('/blogs/edit/{id}', 'AdminBlogController@editBlog'); // Edit specific Blog page
@@ -44,6 +44,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth.role'), function()
 
 });
 
+// Forum Routes
 Route::group(array('prefix' => 'forum', 'before' => ''), function()
 {
     // home
@@ -68,12 +69,24 @@ Route::group(array('prefix' => 'forum', 'before' => 'auth'), function()
 
 });
 
+
+
 // Routes for showing login and logging out
-Route::get('/login', array('uses' => 'LoginController@showLogin'));
-Route::get('/logout', array('uses' => 'LoginController@doLogout'));
+Route::get('/login', array('uses' => 'UserController@showLogin'));
+Route::get('/logout', array('uses' => 'UserController@doLogout'));
 
 // route to process the login form
-Route::post('/login', array('uses' => 'LoginController@doLogin'));
+Route::post('/login', array('uses' => 'UserController@doLogin'));
+
+
+// User Routes
+Route::group(array('prefix' => 'user', 'before' => 'auth'), function()
+{
+    // My profile
+    Route::get('/my_profile', 'UserController@MyProfile');
+    Route::post('/my_profile/update_email', array('before' => 'csrf', 'uses' => 'UserController@update_MyProfile_email') );
+    Route::post('/my_profile/update_password', array('before' => 'csrf', 'uses' => 'UserController@update_MyProfile_password') );
+});
 
 
 
@@ -96,10 +109,9 @@ Route::get('/authtest', array('before' => 'auth.basic', function()
 }));
 
 
-
-
-Route::get('/blog/{slug}', 'PageController@blogPage');
-Route::get('/blog', 'PageController@blogList');
+Route::get('/404', array('as' => '404', 'uses' => 'PageController@error404'));
+Route::get('/blog/{slug}', 'BlogController@blogPage');
+Route::get('/blog', 'BlogController@index');
 Route::get('/{slug}', 'PageController@index');
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'PageController@home');

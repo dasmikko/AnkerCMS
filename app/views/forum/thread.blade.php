@@ -1,59 +1,64 @@
 @extends('default')
 
 @section('content')
-<div class="container"> 
+<div class="row"> 
 
-  <div class="row">
-    <div class="col-md-12">
-      <h1>{{ $thread->title }}</h1>
-      <p><a href="#addpost" class="btn btn-primary">Reply to thread</a></p>
-      <table class="table table-bordered">
-          <tr>
-            <td width=20 style="text-align: center;">
-              <p>{{ $thread->user->username }}</p>
-              <img src="{{ Gravatar::get_gravatar($thread->user->email, 60) }}"></td>
-            <td>{{ $thread->content }}</td>
-          </tr>
-          @if($posts->count() > 0)
-          @foreach ($posts as $post)
-            <tr id="{{ $post->id }}" class="post">
-              <td style="text-align: center;">
-                <p>{{{ $post->user->username }}}</p>
-                <img src="{{ Gravatar::get_gravatar($post->user->email, 60) }}">
-              </td>
-              <td>
-                {{ $post->content }}
-                <a class="btn btn-default" href="#">Quote</a>
-              </td>
-            </tr>
-          @endforeach
-          @endif
+  <div class="large-12 columns">
+	  <h1>{{ $thread->title }}</h1>
+	  <p><a href="#addpost" class="button tiny">Reply to thread</a></p>
+	  <table class="expand" width="100%">
+		  <thead>
+			<tr>
+			  <th width="100">User</th>
+			  <th colspan="2">Post</th>
+			</tr>
+		  </thead>
+		  <tr>
+			<td class="text-center" width="100">
+			  <p>{{ $thread->username }}</p>
+			  <img src="/media/website/uploads/avatar/{{ $thread->avatar }}"></td>
+			<td colspan="2">{{ $thread->content }}</td>
+		  </tr>
+		  @if(isset($posts))
+		  @foreach ($posts as $post)
+			<tr id="{{ $post->post_id }}">
+			  <td class="text-center">
+				<p>{{ $post->username }}</p>
+				<img src="/media/website/uploads/avatar/{{ $post->avatar }}">
+			  </td>
+			  <td>
+				{{ $post->content }}
+				
+			  </td>
+			  <td width="20"><a class="button tiny right" href="#">Quote</a></td>
+			</tr>
+		  @endforeach
+		  @endif
 
-          @if ( Auth::check() )
-          <tr>
-            <td colspan=2 width=20 id="addpost">
-              
-              {{ Form::open(array('url' => '/forum/thread/' . $id . '/addpost', 'class' => 'form-horizontal')) }}
+		  @if ( Auth::check() )
+		  <tr>
+			<td colspan="3" id="addpost">
+			  
+			  {{ Form::open(array('url' => '/forum/thread/' . $id . '/addpost', 'class' => 'form-horizontal')) }}
 
-           
-                  {{ Form::textarea('post_content', '', array('class' => 'redactor_content') )  }}
-                  <br>
-             
-                  {{ Form::submit( 'Quick reply', array('class' => 'btn btn-default') ) }}
-                           
-              {{ Form::close() }}
-            </td>
-          </tr>
-          @else
-          <tr>
-            <td colspan=2 width=20 id="addpost" style="text-align: center;">
-              <p>You need to be logged in to post a reply!</p>
-              <a href="/login" class="btn btn-primary">Login</a>
-            </td>
-          </tr>
-          @endif
-      </table>
-    </div>
+		   
+				  {{ Form::textarea('post_content', '', array('class' => 'redactor_content') )  }}
+				  <br>
+			 
+				  {{ Form::submit( 'Quick reply', array('class' => 'button tiny') ) }}
+						   
+			  {{ Form::close() }}
+			</td>
+		  </tr>
+		  @else
+		  <tr>
+			<td colspan="3" id="addpost" style="text-align: center;">
+			  <p>You need to be logged in to post a reply!</p>
+			  <a href="/login" class="button tiny">Login</a>
+			</td>
+		  </tr>
+		  @endif
+	  </table>
 
   </div> {{-- Row END--}}
 

@@ -11,4 +11,17 @@ class Thread extends Eloquent  {
         return $this->hasOne('User', 'id', 'user_id');
     }
 
+    static function get_threads()
+    {
+    	return DB::table('threads')->join('users', 'threads.user_id', '=', 'users.id')
+    								->get();
+    }
+
+    static function get_thread_by_id($id)
+    {
+    	return DB::table('threads')->join('users', 'threads.user_id', '=', 'users.id')
+    								->where('threads.id', '=', $id)
+    								->first();
+    }
+
 }

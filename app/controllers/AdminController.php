@@ -11,7 +11,12 @@ class AdminController extends \BaseController {
 	public function index()
 	{
 		//show dashboard
-		return View::make('admin.dashboard.default');
+		$view = View::make('admin.dashboard.default');
+
+		// Set page title
+		$view->page_title = "Dashboard";
+
+		return $view;
 	}
 
 	

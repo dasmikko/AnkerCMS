@@ -27,6 +27,9 @@ class AdminPageController extends \BaseController {
 		// Add the AllPages array to the view
 		$view->pages = $allPages;
 
+		// Set page title
+		$view->page_title = "Pages";
+
 		// Show Page list 
 		return $view;
 	}
@@ -69,6 +72,9 @@ class AdminPageController extends \BaseController {
 			$view->slug = $page->slug;
 			$view->description = $page->description;
 
+			// Set page title
+			$view->page_title = "Edit Page";
+
 		}
 		else 
 		{
@@ -79,6 +85,9 @@ class AdminPageController extends \BaseController {
 			$view->page_title = "";
 			$view->slug = "";
 			$view->description = "";
+
+			// Set page title
+			$view->page_title = "Add Page";
 		}
 
 		// Show Page list 

@@ -8,7 +8,8 @@ class ForumThreadTableSeeder extends Seeder {
  
         Thread::create(array(
             'user_id' => 1,
-            'status' => "active",
+            'category_id' => 1,
+            'status' => 1,
             'title' => "Dummy Thread",
             'content' => 'Dummy thread. Awesome!',
         ));

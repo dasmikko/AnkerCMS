@@ -1,5 +1,5 @@
-<? 
- class Gravatar extends Helpers {
+<?php 
+class Gravatar extends Helpers {
  /**
      * Get either a Gravatar URL or complete image tag for a specified email address.
      *
@@ -12,7 +12,8 @@
      * @return String containing either just a URL or a complete image tag
      * @source http://gravatar.com/site/implement/images/php/
      */
-    public static function get_gravatar( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
+    public static function get_gravatar( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) 
+    {
         $url = 'http://www.gravatar.com/avatar/';
         $url .= md5( strtolower( trim( $email ) ) );
         $url .= "?s=$s&d=$d&r=$r";

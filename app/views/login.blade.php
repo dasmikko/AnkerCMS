@@ -1,16 +1,18 @@
 @extends('default')
 
 @section('content')
-<div class="container"> 
 
-  	<div class="row">
-	  	<div class="col-md-12">
 			{{ Form::open(array('url' => 'login', 'class' => 'form-horizontal')) }}
-			<h1>Login</h1>
+			<div class="row">
+				<div class="large-12 columns">
+					<h1>Login</h1>
+				</div>
+			</div>
+			
 
 			<!-- if there are login errors, show them here -->
 			@if (Session::get('loginError'))
-			<div class="alert alert-danger">{{ Session::get('loginError') }}</div>
+				<div class="alert alert-danger">{{ Session::get('loginError') }}</div>
 			@endif
 			<p>
 				{{ $errors->first('username') }}
@@ -20,36 +22,37 @@
 				@endif	
 			</p>
 
-			<div class="form-group">
+			<div class="row">
+				<div class="large-4 columns">
 		        {{ Form::label('username', 'Username', array('class' => 'col-sm-2 control-label') ); }}
-		        <div class="col-sm-3">
-		          {{ Form::text('username', Input::old('username'), array('class' => 'form-control') )  }}
-		        </div>
-		        <div class="col-sm-3">
-		          <span class="label label-danger">{{ $errors->first('username') }}</span>
+		       
+        	  	{{ Form::text('username', Input::old('username'), array('class' => 'form-control') )  }}
+		        
+				@if (Session::get('loginError'))
+          			<span class="label label-danger">{{ $errors->first('username') }}</span>
+      			@endif
 		        </div>
 	      	</div>
 
-	      	<div class="form-group">
+	      	<div class="row">
+				<div class="large-4 columns">
 		        {{ Form::label('password', 'Password', array('class' => 'col-sm-2 control-label') ); }}
-		        <div class="col-sm-3">
-		          {{ Form::password('password', array('class' => 'form-control') )  }}
-		        </div>
-		        <div class="col-sm-3">
-		          <span class="label label-danger">{{ $errors->first('password') }}</span>
+		        
+	          	{{ Form::password('password', array('class' => 'form-control') )  }}
+		        	
+	        	@if (Session::get('loginError'))
+          			<span class="label label-danger">{{ $errors->first('password') }}</span>
+      			@endif
 		        </div>
 	      	</div>
 			
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-				  {{ Form::submit( 'Login', array('class' => 'btn btn-primary') ) }}
+			<div class="row">
+				<div class="large-4 columns">
+				  {{ Form::submit( 'Login', array('class' => 'button tiny') ) }}
 				</div>
 			</div>
 
 			{{ Form::close() }}
-		</div>
-	</div>
 
-</div>
 	
 @stop

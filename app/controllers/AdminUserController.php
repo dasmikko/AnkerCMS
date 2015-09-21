@@ -18,6 +18,9 @@ class AdminUserController extends \BaseController {
 		// Add the AllPages array to the view
 		$view->users = $allUsers;
 
+		// Set page title
+		$view->page_title = "Users";
+
 		// Show Page list 
 		return $view;
 	}
@@ -30,7 +33,8 @@ class AdminUserController extends \BaseController {
 		// Rules for my validation
 		$rules = array(
             'username'    => 'required|alphaNum', // make sure the email is an actual email
-            'password' => 'required|min:3|same:confirmpassword' // password can only be alphanumeric and has to be greater than 3 characters
+            'password' => 'required|min:3|same:confirmpassword', // password can only be alphanumeric and has to be greater than 3 characters
+            'avatar' => 'image',
         );
 
 		// Custom validatin messages
@@ -54,6 +58,26 @@ class AdminUserController extends \BaseController {
 			$user->password = Hash::make(Input::get('password'));
 			$user->role = Input::get('role');
 
+			// Handle avatar upload
+			if (Input::hasFile('avatar'))
+			{
+				// get file
+			    $file = Input::file('avatar');
+
+			    // Get filename
+				$oldFilename = $file->getClientOriginalName();
+
+				$newFilename = sha1_file($oldFilename);
+
+				// Set destination path
+				$destinationPath = 'media/website/uploads/avatar';
+
+				// Move file
+				$uploadSuccess = Input::file('avatar')->move($destinationPath, $newFilename);
+
+				$user->avatar = $newFilename;
+			}
+			
 			// Show Page list 
 			$user->save();
 
@@ -77,6 +101,9 @@ class AdminUserController extends \BaseController {
 			$view->username = $user->username;
 			$view->role = $user->role;
 
+			// Set page title
+			$view->page_title = "Edit User";
+
 		}
 		else 
 		{
@@ -85,6 +112,9 @@ class AdminUserController extends \BaseController {
 			$view->url = '/admin/users/edit/';
 			$view->username = "";
 			$view->role = 1;
+
+			// Set page title
+			$view->page_title = "Add User";
 		}
 
 		// Show User 
@@ -129,6 +159,36 @@ class AdminUserController extends \BaseController {
 		// Setup view variables for the view
 		$user->username = Input::get('username');
 		$user->role = Input::get('role');
+
+		// Handle avatar upload
+		if (Input::hasFile('avatar'))
+		{
+			// get file
+		    $file = Input::file('avatar');
+
+		    // Get filename
+			$oldFilename = $file->getClientOriginalName();
+
+			// Generate filename
+			$newFilename = sha1_file($file);
+
+			$extension = $file->getClientOriginalExtension(); //if you need extension of the file
+
+			// Set destination path
+			$destinationPath = 'media/website/uploads/avatar';
+
+			// Delete old file if exists
+			if(File::exists($destinationPath.'/'.$user->avatar))
+			{
+				// Delete file
+				File::delete($destinationPath.'/'.$user->avatar);
+			}
+
+			// Move file
+			$uploadSuccess = Input::file('avatar')->move($destinationPath, $newFilename.'.'.$extension);
+
+			$user->avatar = $newFilename.'.'.$extension;
+		}
 
 		
 		// Save user

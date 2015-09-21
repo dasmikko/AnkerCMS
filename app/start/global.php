@@ -17,8 +17,9 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
 	app_path().'/models',
 	app_path().'/database/seeds',
-	app_path().'/helpers',
+	app_path().'/helpers'
 ));
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,24 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 | shown, which includes a detailed stack trace during debug.
 |
 */
+
+/*App::error(function($exception, $code)
+{
+    switch ($code)
+    {
+        case 403:
+            return Response::view('errors.403', array(), 403);
+
+        case 404:
+            return Errors::error(404);
+
+        case 500:
+            return Errors::error(500);
+
+        default:
+            return Response::view('errors.default', array(), $code);
+    }
+});*/
 
 App::error(function(Exception $exception, $code)
 {

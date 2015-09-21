@@ -2,6 +2,7 @@
 
 class PageController extends BaseController {
 
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Home Controller
@@ -17,63 +18,62 @@ class PageController extends BaseController {
 
 	public $layout = 'default';
 
+
+    /**
+     * Show page
+     * @param  [type] $slug 
+     * @return [type]       
+     */
     public function index($slug)
     {
     	// Find the specific page based on slug
-    	$page = Page::where('slug', '=', $slug)->firstOrFail();
+    	$page = Page::where('slug', '=', $slug)->first();
 
         //show all pages
         $view = View::make('pages.default');
 
+        if (!isset($page))
+        {
+            App::abort(404);
+        }
+
         $view->page_title = $page->page_title;
         $view->page_description = $page->description;
-        $view->menu = Page::getPagesMenu();
+        $view->menu = $this->menu;
 
         return $view;
     }
 
-    // Show Blog page based on slug
-    public function blogPage($slug)
+    /**
+     * Show homepage
+     * @return [type]
+     */
+    public function home()
     {
-    	/*$blog = Blog::findOrFail(1);
-    	$blog = Blog::where('title', '=', $slug)->firstOrFail();
+        // Get content for the "Home" page
+        $page = Page::find(1);
 
-    	$this->layout->page_title = $blog->page_title;
+        //show all pages
+        $view = View::make('pages.home');
 
-    	// Add mustache template into the $content variable in the master blade template with variables
-	    $this->layout->nest('content', 'blog.default', array(
-	        'pageHeading' => 'Default Page, Rendered with Mustache.php',
-	        'pageContent' => $blog->description
-	    ));  */
+        $view->page_title = "Homepage!";
+        $view->page_description = $page->description;
+        $view->menu = $this->menu;
 
-	    // Get the blog page
-		$blog = Blog::findOrFail(1);
-    	$blog = Blog::where('title', '=', $slug)->firstOrFail();
+        return $view;
 
-		//ssetup view
-		$view = View::make('blog.default');
-
-    	$view->page_title = $blog->page_title;
-    	$view->description = $blog->description;
-    	$view->menu = Page::getPagesMenu();
-
-		return $view; 
     }
 
-    // Show all blog posts
-    public function blogList()
+    public function error404()
     {
-    	// Get all blog pages
-		$allBlogs = Blog::all();
+        //show 404 page
+        $view = View::make('errors.404');
 
-		//ssetup view
-		$view = View::make('blog.list');
+        $view->page_title = "Page was not found!";
+        $view->page_description = "Sorry, the page could not be found...";
+        $view->menu = Page::getPagesMenu();
 
-		$view->blogs = $allBlogs;
-    	$view->page_title = "All blog pages";
-    	$view->menu = Page::getPagesMenu();
-
-		return $view;
+        return $view;
     }
 
 }

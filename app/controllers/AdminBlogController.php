@@ -27,6 +27,9 @@ class AdminBlogController extends \BaseController {
 		// Add the AllPages array to the view
 		$view->blogs = $allBlogs;
 
+		// Set page title
+		$view->page_title = "Blog Posts";
+
 		// Show Page list 
 		return $view;
 	}
@@ -45,10 +48,13 @@ class AdminBlogController extends \BaseController {
 		$blog->description = Input::get('description');
 		$blog->meta_description = Input::get('meta_description');
 
+		// Set page title
+		$view->page_title = "Add Blog Post";
+
 		// Show Page list 
 		$blog->save();
 
-		return Redirect::route('AdminShowBlog')->with('success', 'Blog page was created successfully.');
+		return Redirect::route('AdminShowBlogs')->with('success', 'Blog page was created successfully.');
 	}
 
 	public function EditBlog($id = null)
@@ -62,23 +68,29 @@ class AdminBlogController extends \BaseController {
 			$blog = Blog::find($id);
 		
 			// Setup view variables for the view
-			$view->header = 'Edit Blog';
+			$view->header = 'Edit Blog post';
 			$view->url = '/admin/blogs/edit/'.$id;
 			$view->title = $blog->title;
 			$view->page_title = $blog->page_title;
 			$view->description = $blog->description;
 			$view->meta_description = $blog->meta_description;
 
+			// Set page title
+			$view->page_title = "Edit Blog post";
+
 		}
 		else 
 		{
 			// Setup view variables for the view
-			$view->header = 'Add Blog';
+			$view->header = 'Add Blog post';
 			$view->url = '/admin/blogs/edit/';
 			$view->title = "";
 			$view->page_title = "";
 			$view->description = "";
 			$view->meta_description = "";
+
+			// Set page title
+			$view->page_title = "Add blog post";
 		}
 
 		// Show Page list 
@@ -102,7 +114,7 @@ class AdminBlogController extends \BaseController {
 		// Show Page list 
 		$blog->save();
 
-		return Redirect::route('AdminShowBlog')->with('success', 'Blog page was updated successfully.');
+		return Redirect::route('AdminShowBlogs')->with('success', 'Blog page was updated successfully.');
 	}
 
 	public function DeleteBlog($id) 
@@ -113,7 +125,7 @@ class AdminBlogController extends \BaseController {
 		// Delete page
 		$blog->delete();
 
-		return Redirect::route('AdminShowBlog')->with('success', 'Blog page was deleted successfully.');
+		return Redirect::route('AdminShowBlogs')->with('success', 'Blog page was deleted successfully.');
 	}
 
 	/**

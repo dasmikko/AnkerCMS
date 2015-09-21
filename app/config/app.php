@@ -114,7 +114,8 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Conarwelsh\MustacheL4\MustacheL4ServiceProvider',
-		'Way\Console\GuardLaravelServiceProvider'
+		'Way\Console\GuardLaravelServiceProvider',
+		'Kmd\Logviewer\LogviewerServiceProvider'
 
 	),
 

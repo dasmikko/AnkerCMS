@@ -1,16 +1,15 @@
 @extends('default')
 
 @section('content')
-<div class="container"> 
+<div class="row"> 
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped">
+    <div class="large-12 columns">
+      <h1>Blog!</h1>
+      <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Title</th>
-            <th>Slug</th>
+            <th width="800">Title</th>
             <th></th>
           </tr>
         </thead>
@@ -19,19 +18,11 @@
             <td>{{ $innerArray->id }}</td>
             <td>{{ $innerArray->title }}</td>
             <td>
-              @if ($innerArray->title === "")
-                /
-              @else
-                /{{ $innerArray->title }}
-              @endif
-            </td>
-            <td>
-              <a href="/blog/{{ $innerArray->title }}" class="btn btn-default">Read More</a>
+              <a href="/blog/{{ $innerArray->title }}" class="button tiny">Read More</a>
             </td>
           </tr>
         @endforeach
       </table>
-    </div>
 
   </div> {{-- Row END--}}
 

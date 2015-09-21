@@ -1,37 +1,36 @@
 @extends('default')
 
 @section('content')
-<div class="container"> 
+<div class="row"> 
 
-  <div class="row">
-    <div class="col-md-12">
+  <div class="large-12 columns">
       <h1>Forum!</h1>
-      <p><a href="/forum/thread/addthread" class="btn btn-primary">Create Thread</a></p>
-      <table class="table table-striped">
+      <p><a href="/forum/thread/addthread" class="button tiny">Create Thread</a></p>
+      <table>
         <thead>
           <tr>
-            <th>User</th>
-            <th>Thread Title</th>
+            <th width="100">User</th>
+            <th width="800">Thread Title</th>
             <th># of posts</th>
-            <th></th>
+            <th width="150"></th>
           </tr>
         </thead>
         @foreach ($threads as $thread)
           <tr>
-            <td>
-              <p>{{ $thread['user']['username'] }}</p>
-              <img src="{{ Gravatar::get_gravatar($thread['user']['email'], 50) }}">
+            <td class="text-center">
+              {{ $thread['user']['username'] }}
+              <div class="user_avatar" style="background-image: url( /media/website/uploads/avatar/{{ $thread['user']['avatar'] }}  )">
+              </div>
             </td>
             <td>{{{ $thread['title'] }}}</td>
             <td>{{ $thread['postsAmount'] }}</td>
-            <td><a href="/forum/thread/{{ $thread['id'] }}">View Thread</a></td>
+            <td class="text-center"><a href="/forum/thread/{{ $thread['id'] }}" class="button tiny">View Thread</a></td>
           </tr>
         @endforeach
       </table>
-      <p><a href="/forum/thread/addthread" class="btn btn-primary">Create Thread</a></p>
-    </div>
+      <p><a href="/forum/thread/addthread" class="button tiny">Create Thread</a></p>
 
   </div> {{-- Row END--}}
 
-</div>{{-- .container END --}}
+</div>{{-- .row END --}}
 @stop
