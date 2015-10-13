@@ -1,0 +1,92 @@
+
+
+<?php $__env->startSection('content'); ?>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+
+
+	<div class="row">
+		<div class="large-12 columns">
+			<h1><?php echo e($header); ?></h1>
+		</div>
+	</div>
+			
+			<?php echo Form::open(array('url' => $url, 'files' => true)); ?>
+
+
+			<div class="row">
+				<div class="large-4 columns">
+					<?php echo Form::label('username', 'Username', array('class' => 'col-sm-2 control-label') ); ?>
+
+					<?php echo Form::text('username', $username, array('class' => 'form-control') ); ?>
+
+					<?php if(!empty($errors->first('username'))): ?>
+						<div data-alert class="alert-box alert radius">
+						 	<?php echo $errors->first('username'); ?>
+
+							<a href="#" class="close">&times;</a>
+						</div>
+					<?php endif; ?> 
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="small-4 columns">
+					<?php echo Form::label('password', 'Password', array('class' => 'col-sm-2 control-label') ); ?>
+
+					<?php echo Form::password('password', array('class' => 'form-control') ); ?>
+
+				</div>
+
+				<div class="small-4 columns">
+					<?php echo Form::label('confirmpassword', 'Confirm Password', array('class' => 'col-sm-2 control-label') );; ?>
+
+					<?php echo Form::password('confirmpassword', array('class' => 'form-control') ); ?>
+
+				</div>
+
+				<div class="small-4 columns">
+					<?php if(!empty($errors->first('password'))): ?>
+						<div data-alert class="alert-box alert radius">
+						 	<?php echo $errors->first('password'); ?>
+
+							<a href="#" class="close">&times;</a>
+						</div>
+					<?php endif; ?> 
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-4 columns">
+					<?php echo Form::label('role', 'Role' );; ?>
+
+					<?php echo Form::select('role', array('1' => 'User', '2' => 'Admin'), $role); ?>
+
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<?php echo Form::label('avatar', 'Avatar' ); ?>
+
+					<?php echo Form::file('avatar'); ?>
+
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="large-4 columns">
+					<?php echo Form::submit( 'Save', array('class' => 'button tiny') ); ?>
+
+					<?php echo link_to_route('AdminShowPages', 'Cancel', $parameters = array(), $attributes = array('class' => 'button alert tiny')); ?>
+
+				</div>
+			</div>
+		 
+			<?php echo Form::close(); ?>
+
+		</div>
+
+	</div> <?php /* Row END*/ ?>
+
+<?php $__env->stopSection(); ?> <?php /* Content end */ ?>
+<?php echo $__env->make('admin.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

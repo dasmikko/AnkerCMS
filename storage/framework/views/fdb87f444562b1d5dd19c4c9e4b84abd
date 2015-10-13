@@ -1,0 +1,72 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="row"> 
+
+  <div class="large-12 columns">
+	  <h1><?php echo e($thread->title); ?></h1>
+	  <p><a href="#addpost" class="button tiny">Reply to thread</a></p>
+	  <table class="expand" width="100%">
+		  <thead>
+			<tr>
+			  <th width="100">User</th>
+			  <th colspan="2">Post</th>
+			</tr>
+		  </thead>
+		  <tr>
+			<td class="text-center" width="100">
+			  <p><?php echo e($thread->username); ?></p>
+			  <img src="/media/website/uploads/avatar/<?php echo e($thread->avatar); ?>"></td>
+			<td colspan="2"><?php echo e($thread->content); ?></td>
+		  </tr>
+		  <?php if(isset($posts)): ?>
+		  <?php foreach($posts as $post): ?>
+			<tr id="<?php echo e($post->post_id); ?>">
+			  <td class="text-center">
+				<p><?php echo e($post->username); ?></p>
+				<img src="/media/website/uploads/avatar/<?php echo e($post->avatar); ?>">
+			  </td>
+			  <td>
+				<?php echo e($post->content); ?>
+
+				
+			  </td>
+			  <td width="20"><a class="button tiny right" href="#">Quote</a></td>
+			</tr>
+		  <?php endforeach; ?>
+		  <?php endif; ?>
+
+		  <?php if( Auth::check() ): ?>
+		  <tr>
+			<td colspan="3" id="addpost">
+			  
+			  <?php echo Form::open(array('url' => '/forum/thread/' . $id . '/addpost', 'class' => 'form-horizontal')); ?>
+
+
+		   
+				  <?php echo Form::textarea('post_content', '', array('class' => 'redactor_content') ); ?>
+
+				  <br>
+			 
+				  <?php echo Form::submit( 'Quick reply', array('class' => 'button tiny') ); ?>
+
+						   
+			  <?php echo Form::close(); ?>
+
+			</td>
+		  </tr>
+		  <?php else: ?>
+		  <tr>
+			<td colspan="3" id="addpost" style="text-align: center;">
+			  <p>You need to be logged in to post a reply!</p>
+			  <a href="/login" class="button tiny">Login</a>
+			</td>
+		  </tr>
+		  <?php endif; ?>
+	  </table>
+
+  </div> <?php /* Row END*/ ?>
+
+</div><?php /* .container END */ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

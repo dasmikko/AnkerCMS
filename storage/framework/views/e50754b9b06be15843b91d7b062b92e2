@@ -1,0 +1,38 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="row"> 
+
+  <div class="large-12 columns">
+      <h1>Forum!</h1>
+      <p><a href="/forum/thread/addthread" class="button tiny">Create Thread</a></p>
+      <table>
+        <thead>
+          <tr>
+            <th width="100">User</th>
+            <th width="800">Thread Title</th>
+            <th># of posts</th>
+            <th width="150"></th>
+          </tr>
+        </thead>
+        <?php foreach($threads as $thread): ?>
+          <tr>
+            <td class="text-center">
+              <?php echo e($thread['user']['username']); ?>
+
+              <div class="user_avatar" style="background-image: url( /media/website/uploads/avatar/<?php echo e($thread['user']['avatar']); ?>  )">
+              </div>
+            </td>
+            <td><?php echo e($thread['title']); ?></td>
+            <td><?php echo e($thread['postsAmount']); ?></td>
+            <td class="text-center"><a href="/forum/thread/<?php echo e($thread['id']); ?>" class="button tiny">View Thread</a></td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+      <p><a href="/forum/thread/addthread" class="button tiny">Create Thread</a></p>
+
+  </div> <?php /* Row END*/ ?>
+
+</div><?php /* .row END */ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

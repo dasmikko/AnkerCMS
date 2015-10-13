@@ -1,0 +1,19 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="container"> 
+
+  <div class="row">
+    <div class="col-md-12">
+      	<?php echo e($description); ?>
+
+	</div>
+	<div class="col-md-12">    
+		<hr>
+    	<div class="fb-comments" data-href="<?php echo e(Request::url()); ?>" data-numposts="5" data-colorscheme="light"></div>
+	</div>
+  </div> <?php /* Row END*/ ?>
+
+</div><?php /* .container END */ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

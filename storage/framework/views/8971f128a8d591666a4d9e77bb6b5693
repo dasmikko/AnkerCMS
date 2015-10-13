@@ -1,0 +1,11 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="row">
+	<div class="large-12 column">
+		<?php echo $page_description; ?>
+
+	</div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

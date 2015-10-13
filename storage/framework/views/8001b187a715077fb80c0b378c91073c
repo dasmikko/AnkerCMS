@@ -1,0 +1,68 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+			<?php echo Form::open(array('url' => 'login', 'class' => 'form-horizontal')); ?>
+
+			<div class="row">
+				<div class="large-12 columns">
+					<h1>Login</h1>
+				</div>
+			</div>
+			
+
+			<!-- if there are login errors, show them here -->
+			<?php if(Session::get('loginError')): ?>
+				<div class="alert alert-danger"><?php echo e(Session::get('loginError')); ?></div>
+			<?php endif; ?>
+			<p>
+				<?php echo $errors->first('username'); ?>
+
+				<?php echo $errors->first('password'); ?>
+
+				<?php if( $errors->first('admin') != "" ): ?>
+				<div class="alert alert-danger"><?php echo e($errors->first('admin')); ?></div> 
+				<?php endif; ?>	
+			</p>
+
+			<div class="row">
+				<div class="large-4 columns">
+		        <?php echo Form::label('username', 'Username', array('class' => 'col-sm-2 control-label') ); ?>
+
+		       
+        	  	<?php echo Form::text('username', Input::old('username'), array('class' => 'form-control') ); ?>
+
+		        
+				<?php if(Session::get('loginError')): ?>
+          			<span class="label label-danger"><?php echo e($errors->first('username')); ?></span>
+      			<?php endif; ?>
+		        </div>
+	      	</div>
+
+	      	<div class="row">
+				<div class="large-4 columns">
+		        <?php echo Form::label('password', 'Password', array('class' => 'col-sm-2 control-label') ); ?>
+
+		        
+	          	<?php echo Form::password('password', array('class' => 'form-control') ); ?>
+
+		        	
+	        	<?php if(Session::get('loginError')): ?>
+          			<span class="label label-danger"><?php echo e($errors->first('password')); ?></span>
+      			<?php endif; ?>
+		        </div>
+	      	</div>
+			
+			<div class="row">
+				<div class="large-4 columns">
+				  <?php echo Form::submit( 'Login', array('class' => 'button tiny') ); ?>
+
+				</div>
+			</div>
+
+			<?php echo Form::close(); ?>
+
+
+	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

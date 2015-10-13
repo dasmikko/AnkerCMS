@@ -1,0 +1,31 @@
+
+
+<?php $__env->startSection('content'); ?>
+<div class="row"> 
+
+    <div class="large-12 columns">
+      <h1>Blog!</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th width="800">Title</th>
+            <th></th>
+          </tr>
+        </thead>
+        <?php foreach($blogs as $innerArray): ?>
+          <tr>
+            <td><?php echo e($innerArray->id); ?></td>
+            <td><?php echo e($innerArray->title); ?></td>
+            <td>
+              <a href="/blog/<?php echo e($innerArray->title); ?>" class="button tiny">Read More</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+
+  </div> <?php /* Row END*/ ?>
+
+</div><?php /* .container END */ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
